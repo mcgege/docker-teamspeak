@@ -1,0 +1,16 @@
+mkdir data
+chown -R 503:503 data
+
+docker run \
+  --detach \
+  --name=teamspeak \
+  --cap-add=NET_ADMIN \
+  --restart=always \
+  --volume=/opt/docker/teamspeak/data:/data \
+  --memory=1G \
+  mcgege/teamspeak
+
+docker exec --user=root teamspeak /firewall.sh
+
+docker logs -f teamspeak
+
